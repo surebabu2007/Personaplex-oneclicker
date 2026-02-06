@@ -1,0 +1,50 @@
+================================================================================
+                    PERSONAPLEX - QUICK START GUIDE
+================================================================================
+        Installer by: Suresh Pydikondala (SurAI Verse)
+        YouTube: https://www.youtube.com/@suraiverse
+================================================================================
+
+FIRST TIME SETUP:
+-----------------
+1. Double-click: INSTALL_PERSONAPLEX.bat
+2. Follow the prompts to complete installation
+3. When asked, enter your HuggingFace token
+   (Get one at: https://huggingface.co/settings/tokens)
+
+RUNNING PERSONAPLEX:
+-------------------
+After installation, just double-click: START_PERSONAPLEX.bat
+
+Then open your browser to: https://localhost:8998
+
+PUBLIC SHARE (SHAREABLE LINK):
+-----------------------------
+Double-click: START_PERSONAPLEX_PUBLIC.bat
+It will print a public HTTPS link in the terminal.
+Keep the window open to keep the link active.
+
+REQUIREMENTS:
+-------------
+- Windows 10 or 11
+- Python 3.10 or higher (https://python.org)
+- NVIDIA GPU with 12GB+ VRAM (RTX 3080 or better recommended)
+- Internet connection (first run downloads ~14GB of models)
+
+TROUBLESHOOTING:
+----------------
+- Out of memory? Use: START_PERSONAPLEX_CPU_OFFLOAD.bat
+- Installation issues? See: INSTALL.md
+- Check your setup: CHECK_STATUS.bat
+- Full documentation: README.md
+
+NEED HELP?
+----------
+- YouTube Tutorials: https://www.youtube.com/@suraiverse
+- Discord: https://discord.gg/5jAXrrbwRb
+- Issues: https://github.com/NVIDIA/personaplex/issues
+
+================================================================================
+  Subscribe to SurAI Verse for more AI tutorials and guides!
+  https://www.youtube.com/@suraiverse - By Suresh Pydikondala
+================================================================================
