@@ -15,12 +15,17 @@ PersonaPlex is a real-time, full-duplex speech-to-speech conversational model wi
 
 ---
 
-## Credits
+## Credits & Acknowledgements
 
-- **Main project:** [NVIDIA PersonaPlex](https://github.com/NVIDIA/personaplex) — original model and research.
-- **Windows one-click installer:** Created by **Suresh Pydikondala** for easy Windows installation and launch.
+This repository is a **Windows-focused one-click installer and launcher** built on top of the original PersonaPlex project.
 
-This project is a Windows-focused packaging of the upstream [NVIDIA/personaplex](https://github.com/NVIDIA/personaplex) repository.
+**Original research & core implementation**  
+The PersonaPlex model, architecture, and main codebase are created and maintained by the **NVIDIA PersonaPlex research team**. All credit for the core AI, speech model, and research innovation belongs to the original authors and contributors.
+
+**Windows one-click installer & packaging**  
+The Windows one-click setup, automation scripts, and launchers in this repo were created by **Suresh Pydikondala**, with the goal of making PersonaPlex easier to install, test, and run on Windows without complex manual setup.
+
+This repository does not modify the fundamental model or research logic—it focuses on **accessibility, automation, and practical usability** on Windows.
 
 ---
 
@@ -82,6 +87,37 @@ Pre-packaged voice embeddings:
 - **Natural (male):** NATM0, NATM1, NATM2, NATM3  
 - **Variety (female):** VARF0–VARF4  
 - **Variety (male):** VARM0–VARM4  
+
+---
+
+## Hardware testing & environment
+
+This setup has been personally tested by the maintainer on:
+
+| Component | Tested configuration |
+|-----------|------------------------|
+| **OS**    | Windows 10/11          |
+| **GPU**   | NVIDIA RTX 4090        |
+| **VRAM**  | 24 GB                  |
+
+Performance, stability, and behavior may vary on your system (GPU model, VRAM, CPU, RAM, drivers, OS). Please test and tune parameters according to your own hardware.
+
+---
+
+## Known issues & observations
+
+Based on personal testing, the following are known and originate from the **upstream** codebase (not from this Windows installer):
+
+- **Optimization:** Some parts of the pipeline are not fully optimized yet, which may lead to higher GPU usage or occasional inefficiencies.
+- **Voice response looping:** In certain scenarios, the AI voice may enter a loop and repeat replies. When it does not loop, responses are often accurate and natural.
+
+These are shared as practical observations to set expectations. For core model issues or research discussions, please refer to the [original PersonaPlex repository](https://github.com/NVIDIA/personaplex).
+
+---
+
+## Disclaimer
+
+This project is provided as a **community convenience wrapper** around the original PersonaPlex work. For core model issues, research discussions, or fundamental behavior, please refer to the [original PersonaPlex repository and authors](https://github.com/NVIDIA/personaplex).
 
 ---
 
