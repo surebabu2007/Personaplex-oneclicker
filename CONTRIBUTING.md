@@ -68,9 +68,6 @@ python -m venv venv
 # Activate it (Windows)
 .\venv\Scripts\activate
 
-# Activate it (Linux/macOS)
-source venv/bin/activate
-
 # Install in development mode
 pip install -e moshi/.
 

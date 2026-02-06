@@ -270,7 +270,7 @@ def check_ram() -> CheckResult:
             total_gb = meminfo.ullTotalPhys / (1024**3)
             avail_gb = meminfo.ullAvailPhys / (1024**3)
         else:
-            # Linux/Mac
+            # Non-Windows (e.g. WSL)
             with open('/proc/meminfo', 'r') as f:
                 meminfo = f.read()
             total = int([x for x in meminfo.split('\n') if 'MemTotal' in x][0].split()[1]) / (1024**2)

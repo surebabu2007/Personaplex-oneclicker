@@ -1,5 +1,5 @@
 name: Bug Report
-description: You found a bug.
+description: You found a bug (Windows one-click installer).
 labels: ["bug", "triage"]
 body:
   - type: dropdown
@@ -9,8 +9,6 @@ body:
       description: Which backend is concerned with your bug report?
       options:
         - The PyTorch implementation
-        - The MLX implementation
-        - The Rust implementation
         - Other / All
       default: 0
     validations:
@@ -19,11 +17,10 @@ body:
     id: os
     attributes:
       label: Operating system
-      description: What is your operating system?
+      description: What is your Windows version?
       options:
-        - Linux
-        - Mac OS X
-        - Windows (unsupported)
+        - Windows 10
+        - Windows 11
       default: 0
     validations:
       required: true
@@ -35,8 +32,7 @@ body:
       options:
         - CPU
         - GPU with CUDA
-        - Metal with MLX
-      default: 0
+      default: 1
     validations:
       required: true
   - type: textarea
@@ -61,19 +57,14 @@ body:
     id: env
     attributes:
       label: Environment
-      description: Please provide any other relevant information, such as log extracts, code etc.
+      description: Please provide system and software details.
       placeholder: 
       value: |
-          Fill in the following information on your system.
-          - Operating system version:
+          - Windows version:
 
-          If the backend impacted is PyTorch:
           - Python version:
           - PyTorch version:
-          - CUDA version (run `python -c 'import torch;  print(torch.version.cuda)'`):
-          - GPU model and memory:
-            
-          If the backend is MLX:
-          - Mac model:
+          - CUDA version (run `python -c "import torch; print(torch.version.cuda)"`):
+          - GPU model and VRAM:
     validations:
       required: true

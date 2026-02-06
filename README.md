@@ -1,11 +1,11 @@
-# PersonaPlex: Voice and Role Control for Full Duplex Conversational Speech Models
+# PersonaPlex One-Click Installer (Windows)
 
 [![Weights](https://img.shields.io/badge/🤗-Weights-yellow)](https://huggingface.co/nvidia/personaplex-7b-v1)
 [![Paper](https://img.shields.io/badge/📄-Paper-blue)](https://research.nvidia.com/labs/adlr/files/personaplex/personaplex_preprint.pdf)
 [![Demo](https://img.shields.io/badge/🎮-Demo-green)](https://research.nvidia.com/labs/adlr/personaplex/)
 [![Discord](https://img.shields.io/badge/Discord-Join-purple?logo=discord)](https://discord.gg/5jAXrrbwRb)
 
-PersonaPlex is a real-time, full-duplex speech-to-speech conversational model that enables persona control through text-based role prompts and audio-based voice conditioning. Trained on a combination of synthetic and real conversations, it produces natural, low-latency spoken interactions with a consistent persona. PersonaPlex is based on the [Moshi](https://arxiv.org/abs/2410.00037) architecture and weights.
+PersonaPlex is a real-time, full-duplex speech-to-speech conversational model with persona control via text prompts and audio voice conditioning. This repository provides a **Windows one-click installer** so you can get up and running without manual setup.
 
 <p align="center">
   <img src="assets/architecture_diagram.png" alt="PersonaPlex Model Architecture">
@@ -15,220 +15,89 @@ PersonaPlex is a real-time, full-duplex speech-to-speech conversational model th
 
 ---
 
+## Credits
+
+- **Main project:** [NVIDIA PersonaPlex](https://github.com/NVIDIA/personaplex) — original model and research.
+- **Windows one-click installer:** Created by **Suresh Pydikondala** for easy Windows installation and launch.
+
+This project is a Windows-focused packaging of the upstream [NVIDIA/personaplex](https://github.com/NVIDIA/personaplex) repository.
+
+---
+
 ## Quick Start (Windows)
 
-**One-Click Installation:**
+1. **Download or clone** this repository.
+2. **Double-click** `INSTALL_PERSONAPLEX.bat` — it handles environment, dependencies, and client build.
+3. **Follow the prompts** to set your HuggingFace token (required for model access).
+4. When installation finishes, **double-click** `START_PERSONAPLEX.bat` to launch.
 
-1. Download or clone this repository
-2. Double-click **`INSTALL_PERSONAPLEX.bat`** - handles everything automatically
-3. Follow the prompts to set up your HuggingFace token
-4. Done! Use **`START_PERSONAPLEX.bat`** to launch anytime
+**Requirements:** Windows 10 or 11, Python 3.10+, Node.js 18+, and an NVIDIA GPU (12GB+ VRAM recommended).
 
-**Requirements:** Windows 10/11, Python 3.10+, NVIDIA GPU (12GB+ VRAM recommended)
+> **Note — First-time installation and first run:**  
+> The first time you run the installer and the first time you start PersonaPlex, the app will **download roughly 14GB of model files** from HuggingFace. This can take **30–60 minutes** or more depending on your connection. Please be patient and keep the window open until it completes. After that, models are cached locally and future launches are much faster (~30–60 seconds).
 
-> **Note:** First launch downloads ~14GB of model files. See [INSTALL.md](INSTALL.md) for detailed instructions and troubleshooting.
-
----
-
-## Quick Start (Linux/macOS)
-
-```bash
-# 1. Clone and install
-git clone https://github.com/NVIDIA/personaplex.git
-cd personaplex
-pip install moshi/.
-
-# 2. Accept license and set token
-# Visit: https://huggingface.co/nvidia/personaplex-7b-v1
-export HF_TOKEN=your_token_here
-
-# 3. Launch server
-SSL_DIR=$(mktemp -d); python -m moshi.server --ssl "$SSL_DIR"
-
-# 4. Open https://localhost:8998 in your browser
-```
+For detailed steps and troubleshooting, see [INSTALL.md](INSTALL.md).
 
 ---
 
-## Detailed Installation
+## What the installer does
 
-### Prerequisites
+- Checks system requirements (Python, Node.js, GPU, RAM).
+- Creates a virtual environment and installs Python dependencies (including `moshi`).
+- Builds the web client so you can use the UI in your browser.
+- Guides you through HuggingFace token setup.
+- Optionally launches PersonaPlex when done.
 
-Install the [Opus audio codec](https://github.com/xiph/opus) development library:
-```bash
-# Ubuntu/Debian
-sudo apt install libopus-dev
+---
 
-# Fedora/RHEL
-sudo dnf install opus-devel
+## After installation
 
-# macOS
-brew install opus
-```
+| Action              | What to run                          |
+|---------------------|--------------------------------------|
+| Start PersonaPlex   | `START_PERSONAPLEX.bat`              |
+| Low VRAM / OOM      | `START_PERSONAPLEX_CPU_OFFLOAD.bat`  |
+| Public share link   | `START_PERSONAPLEX_PUBLIC.bat`       |
+| All options / menu  | `LAUNCHER.bat`                       |
+| Check setup         | `CHECK_STATUS.bat`                   |
+| Set HuggingFace     | `SETUP_HUGGINGFACE.bat`              |
 
-### Installation
+Open the Web UI at **https://localhost:8998** (accept the self-signed certificate warning in the browser if prompted).
 
-Download this repository and install with:
-```bash
-pip install moshi/.
-```
+---
 
-Extra step for Blackwell based GPUs as suggested in (See https://github.com/NVIDIA/personaplex/issues/2):
-```bash
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu130
-```
+## HuggingFace setup (required)
 
+1. Create an account at [huggingface.co](https://huggingface.co).
+2. Accept the model license: [nvidia/personaplex-7b-v1](https://huggingface.co/nvidia/personaplex-7b-v1).
+3. Create a **Read** token at [huggingface.co/settings/tokens](https://huggingface.co/settings/tokens).
+4. Run `SETUP_HUGGINGFACE.bat` and paste your token when asked.
 
-### Accept Model License
-Log in to your Huggingface account and accept the Moshi model license [here](https://huggingface.co/nvidia/personaplex-7b-v1). <br>
-Then set up your Huggingface authentication:
-```bash
-export HF_TOKEN=<YOUR_HUGGINGFACE_TOKEN>
-```
-
-### Launch Server
-
-Launch server for live interaction (temporary SSL certs for https):
-```bash
-SSL_DIR=$(mktemp -d); python -m moshi.server --ssl "$SSL_DIR"
-```
-
-**CPU Offload:** If your GPU has insufficient memory, use the `--cpu-offload` flag to offload model layers to CPU. This requires the `accelerate` package (`pip install accelerate`):
-```bash
-SSL_DIR=$(mktemp -d); python -m moshi.server --ssl "$SSL_DIR" --cpu-offload
-```
-
-Access the Web UI from a browser at `localhost:8998` if running locally, otherwise look for the access link printed by the script:
-```
-Access the Web UI directly at https://11.54.401.33:8998
-```
-
-### Public Share (Gradio Tunnel)
-
-Create a public, shareable link (HTTPS) without configuring ports or DNS. The link is printed in the terminal and stays active while the server is running.
-
-**Windows (recommended):**
-```
-START_PERSONAPLEX_PUBLIC.bat
-```
-Optional stable link: set `PERSONAPLEX_TUNNEL_TOKEN` as an environment variable before launching.
-
-**Linux/macOS:**
-```bash
-pip install gradio
-python -m moshi.server --gradio-tunnel
-```
-
-### Offline Evaluation
-
-For offline evaluation use the offline script that streams in an input wav file and produces an output wav file from the captured output stream. The output file will be the same duration as the input file.
-
-Add `--cpu-offload` to any command below if your GPU has insufficient memory (requires `accelerate` package). Or install cpu-only PyTorch for offline evaluation on pure CPU.
-
-**Assistant example:**
-```bash
-HF_TOKEN=<TOKEN> \
-python -m moshi.offline \
-  --voice-prompt "NATF2.pt" \
-  --input-wav "assets/test/input_assistant.wav" \
-  --seed 42424242 \
-  --output-wav "output.wav" \
-  --output-text "output.json"
-```
-
-**Service example:**
-```bash
-HF_TOKEN=<TOKEN> \
-python -m moshi.offline \
-  --voice-prompt "NATM1.pt" \
-  --text-prompt "$(cat assets/test/prompt_service.txt)" \
-  --input-wav "assets/test/input_service.wav" \
-  --seed 42424242 \
-  --output-wav "output.wav" \
-  --output-text "output.json"
-```
+---
 
 ## Voices
 
-PersonaPlex supports a wide range of voices; we pre-package embeddings for voices that sound more natural and conversational (NAT) and others that are more varied (VAR). The fixed set of voices are labeled:
-```
-Natural(female): NATF0, NATF1, NATF2, NATF3
-Natural(male):   NATM0, NATM1, NATM2, NATM3
-Variety(female): VARF0, VARF1, VARF2, VARF3, VARF4
-Variety(male):   VARM0, VARM1, VARM2, VARM3, VARM4
-```
+Pre-packaged voice embeddings:
 
-## Prompting Guide
+- **Natural (female):** NATF0, NATF1, NATF2, NATF3  
+- **Natural (male):** NATM0, NATM1, NATM2, NATM3  
+- **Variety (female):** VARF0–VARF4  
+- **Variety (male):** VARM0–VARM4  
 
-The model is trained on synthetic conversations for a fixed assistant role and varying customer service roles.
+---
 
-### Assistant Role
+## Support and license
 
-The assistant role has the prompt:
-```
-You are a wise and friendly teacher. Answer questions or provide advice in a clear and engaging way.
-```
+- **Issues (upstream):** [NVIDIA/personaplex issues](https://github.com/NVIDIA/personaplex/issues)
+- **Discord:** [PersonaPlex Discord](https://discord.gg/5jAXrrbwRb)
 
-Use this prompt for the QA assistant focused "User Interruption" evaluation category in [FullDuplexBench](https://arxiv.org/abs/2503.04721).
+Code is under the MIT license. Model weights use the NVIDIA Open Model license.
 
-### Customer Service Roles
+---
 
-The customer service roles support a variety of prompts. Here are some examples for prompting style reference:
-```
-You work for CitySan Services which is a waste management and your name is Ayelen Lucero. Information: Verify customer name Omar Torres. Current schedule: every other week. Upcoming pickup: April 12th. Compost bin service available for $8/month add-on.
-```
-```
-You work for Jerusalem Shakshuka which is a restaurant and your name is Owen Foster. Information: There are two shakshuka options: Classic (poached eggs, $9.50) and Spicy (scrambled eggs with jalapenos, $10.25). Sides include warm pita ($2.50) and Israeli salad ($3). No combo offers. Available for drive-through until 9 PM.
-```
-```
-You work for AeroRentals Pro which is a drone rental company and your name is Tomaz Novak. Information: AeroRentals Pro has the following availability: PhoenixDrone X ($65/4 hours, $110/8 hours), and the premium SpectraDrone 9 ($95/4 hours, $160/8 hours). Deposit required: $150 for standard models, $300 for premium.
-```
+## Citation (upstream work)
 
-### Casual Conversations
+If you use PersonaPlex in research, please cite:
 
-The model is also trained on real conversations from the [Fisher English Corpus](https://catalog.ldc.upenn.edu/LDC2004T19) with LLM-labeled prompts for open-ended conversations. Here are some example prompts for casual conversations:
-```
-You enjoy having a good conversation.
-```
-```
-You enjoy having a good conversation. Have a casual discussion about eating at home versus dining out.
-```
-```
-You enjoy having a good conversation. Have an empathetic discussion about the meaning of family amid uncertainty.
-```
-```
-You enjoy having a good conversation. Have a reflective conversation about career changes and feeling of home. You have lived in California for 21 years and consider San Francisco your home. You work as a teacher and have traveled a lot. You dislike meetings.
-```
-```
-You enjoy having a good conversation. Have a casual conversation about favorite foods and cooking experiences. You are David Green, a former baker now living in Boston. You enjoy cooking diverse international dishes and appreciate many ethnic restaurants.
-```
-
-Use the prompt `You enjoy having a good conversation.` for the "Pause Handling", "Backchannel" and "Smooth Turn Taking" evaluation categories of FullDuplexBench.
-
-## Generalization
-
-Personaplex finetunes Moshi and benefits from the generalization capabilities of the underlying [Helium](https://kyutai.org/blog/2025-04-30-helium) LLM. Thanks to the broad training corpus of the backbone, we find that the model will respond plausibly to out-of-distribution prompts and lead to unexpected or fun conversations. We encourage experimentation with different prompts to test the model's emergent ability to handle scenarios outside its training distribution. As an inspiration we feature the following astronaut prompt in the WebUI:
-```
-You enjoy having a good conversation. Have a technical discussion about fixing a reactor core on a spaceship to Mars. You are an astronaut on a Mars mission. Your name is Alex. You are already dealing with a reactor core meltdown on a Mars mission. Several ship systems are failing, and continued instability will lead to catastrophic failure. You explain what is happening and you urgently ask for help thinking through how to stabilize the reactor.
-```
-
-## Contributing
-
-We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
-
-## Support
-
-- **Issues**: [GitHub Issues](https://github.com/NVIDIA/personaplex/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/NVIDIA/personaplex/discussions)
-- **Discord**: [Join our Discord](https://discord.gg/5jAXrrbwRb)
-
-## License
-
-The present code is provided under the MIT license. The weights for the models are released under the NVIDIA Open Model license.
-
-## Citation
-
-If you use PersonaPlex in your research, please cite our paper:
 ```bibtex
 @article{roy2026personaplex,
   title={PersonaPlex: Voice and Role Control for Full Duplex Conversational Speech Models},
